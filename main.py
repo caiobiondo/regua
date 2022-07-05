@@ -1,9 +1,9 @@
 import json
 import re
 
-# create a sample json
+# json mockado - é possivel fazer uma chamada para endpoint do flask
 
-a = '{ "CALCULO_CCF_CEA": 0,     "CALCULO_CCF_KREG": 0,     "CALCULO_CEA_RAROC": 3948681.0,     ' \
+j = '{ "CALCULO_CCF_CEA": 0,     "CALCULO_CCF_KREG": 0,     "CALCULO_CEA_RAROC": 3948681.0,     ' \
     '"CALCULO_CRIACAO_VALOR": -225788.0,     "CALCULO_CUSTOSADM_RAROC": 0.0,     ' \
     '"CALCULO_CUSTO_CAPITAL": 524670.0,     ' \
     '"CALCULO_EAD_CEA_MEDIA": 52367320,     "CALCULO_EAD_KREG_MEDIA": 52367320,     ' \
@@ -19,37 +19,40 @@ a = '{ "CALCULO_CCF_CEA": 0,     "CALCULO_CCF_KREG": 0,     "CALCULO_CEA_RAROC":
     '"PGTO_PASSIVOS_VP": 0.0,     "RESULTADO_VENDA": 0.0,     "RESULTADO_VENDA_LIQ": 0.0,     "VL_BOF": 0,     ' \
     '"calculo_custo_adm_roe": 0.0,     "calculo_giroproprio_roe": 696296.0,     "calculo_ir_roe": 296348.0,     ' \
     '"calculo_jcp_roe": 113510.0,     "calculo_kreg_roe": 6284078,     "calculo_mfb_roe": 0,     ' \
-    '"calculo_perc_kreg_roe": "12,0",     "calculo_perda_roe": 5367,     "calculo_receitas_roe": 0.0,     ' \
+    '"calculo_perc_kreg_roe": "12,0",     "calculo_perda_roe": 5,     "calculo_receitas_roe": 0.0,     ' \
     '"calculo_resultado_antes_ir_roe": 658551.0,     "calculo_rgo_roe": 475713.0,     ' \
     '"calculo_tributarias_roe": 32378.0 }'
 
 # Convert JSON to String
 
-y = json.dumps(a)
-json_load = (json.loads(a))
 
-y1 = json_load['calculo_perda_roe']
+json_load = (json.loads(j))
+campo_calculo = json_load['calculo_perda_roe']
 
-#print(y1)
-if y1 < 5370:
-    a = {"visao_cliente": "Excelente"}
-else:
-    a = {"visao_cliente": "Medio"}
-
-b = json.dumps(a)
-print(b)
+# A função esta referente ao 1 campo do json de exemplo ( pode ser medido  +1 de 1 campo )
 
 
-def regua_cliente (y1):
-    if y1 > 5370:
-        a = {"visao_cliente": "Excelente"}
-    else:
-        a = {"visao_cliente": "Medio"}
+def regua_cliente (campo_calculo):
+    if 0 < campo_calculo < 1341:
+        output_json = {"visao_cliente": "Excelente"}
+        b = json.dumps(output_json)
 
-    return a
+    if 1342 < campo_calculo < 2682:
+        output_json = {"visao_cliente": "Medio"}
+        b = json.dumps(output_json)
+
+    if 2683 < campo_calculo < 4023:
+        output_json =  {"visao_cliente": "Insufuciente"}
+        b = json.dumps(output_json)
+
+    if campo_calculo > 4023:
+        output_json = {"visao_cliente": "Ruim"}
+        b = json.dumps(output_json)
+
+    return b
 
 
-print (regua_cliente(y1))
+print(regua_cliente(campo_calculo))
 
 
 
