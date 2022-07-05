@@ -32,15 +32,17 @@ y1 = json_load['calculo_perda_roe']
 
 print(y1)
 
-if y1 < 5370:
-    a = {"visao_cliente": "Excelente"}
-else:
-    a = {"visao_cliente": "Medio"}
 
-b = json.dumps(a)
-print(b)
+def regua_cliente (y1):
+    if y1 > 5370:
+        a = {"visao_cliente": "Excelente"}
+    else:
+        a = {"visao_cliente": "Medio"}
+
+    return a
 
 
+print (regua_cliente(y1))
 
 
 
